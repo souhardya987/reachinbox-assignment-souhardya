@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { format } from 'date-fns';
 import { useSearchParams } from 'react-router-dom';
+import { API_URL } from '../config';
 
 export default function ScheduledEmails() {
     const [searchParams] = useSearchParams();
@@ -10,7 +11,7 @@ export default function ScheduledEmails() {
     const { data: emails, isLoading } = useQuery({
         queryKey: ['scheduledEmails'],
         queryFn: async () => {
-            const res = await axios.get('http://localhost:3000/api/scheduled-emails', { withCredentials: true });
+            const res = await axios.get(`${API_URL}/api/scheduled-emails`, { withCredentials: true });
             return res.data;
         }
     });

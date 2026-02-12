@@ -4,6 +4,7 @@ import { Home, Send, ChevronDown, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 export default function Sidebar() {
     console.log('Sidebar rendering...');
@@ -13,7 +14,7 @@ export default function Sidebar() {
     const { data: counts } = useQuery({
         queryKey: ['emailCounts'],
         queryFn: async () => {
-            const res = await axios.get('http://localhost:3000/api/email-counts', { withCredentials: true });
+            const res = await axios.get(`${API_URL}/api/email-counts`, { withCredentials: true });
             return res.data;
         },
         refetchInterval: 5000 // Poll every 5 seconds for updates

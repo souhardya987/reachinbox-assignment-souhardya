@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Bold, Italic, Underline, Paperclip, Clock, X, Send as SendIcon } from 'lucide-react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../config';
 
 export default function ComposeEmail() {
     const { user } = useAuth();
@@ -32,7 +33,7 @@ export default function ComposeEmail() {
 
     const scheduleMutation = useMutation({
         mutationFn: async (data: any) => {
-            return axios.post('http://localhost:3000/api/schedule-email', data, { withCredentials: true });
+            return axios.post(`${API_URL}/api/schedule-email`, data, { withCredentials: true });
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['scheduledEmails'] });

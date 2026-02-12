@@ -4,6 +4,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { useSearchParams } from 'react-router-dom';
 import { Trash2 } from 'lucide-react';
+import { API_URL } from '../config';
 
 export default function SentEmails() {
     const [searchParams] = useSearchParams();
@@ -13,14 +14,14 @@ export default function SentEmails() {
     const { data: sentEmails, isLoading } = useQuery({
         queryKey: ['sentEmails'],
         queryFn: async () => {
-            const res = await axios.get('http://localhost:3000/api/sent-emails', { withCredentials: true });
+            const res = await axios.get(`${API_URL}/api/sent-emails`, { withCredentials: true });
             return res.data;
         }
     });
 
     const deleteMutation = useMutation({
         mutationFn: async (id: string) => {
-            await axios.delete(`http://localhost:3000/api/scheduled-emails/${id}`, { withCredentials: true });
+            await axios.delete(`${API_URL}/api/scheduled-emails/${id}`, { withCredentials: true });
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['sentEmails'] });

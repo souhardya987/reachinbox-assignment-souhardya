@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 interface User {
     id: string;
@@ -23,7 +24,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         // Check if user is logged in
-        axios.get('/auth/me')
+        // We must use withCredentials: true for cross-origin cookies if backend is on a different domain
+        axios.get(`${API_URL}/auth/me`, { withCredentials: true })
             .then(res => {
                 setUser(res.data);
             })
@@ -34,11 +36,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }, []);
 
     const login = () => {
-        window.location.href = 'http://localhost:3000/auth/google';
+        window.location.href = `${API_URL}/auth/google`;
     };
 
     const logout = () => {
-        window.location.href = 'http://localhost:3000/auth/logout';
+        window.location.href = `${API_URL}/auth/logout`;
     };
 
     return (
