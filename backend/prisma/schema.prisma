@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ScheduledEmail {
+  idString     String   @id @default(uuid())
+  recipient    String
+  userId       String   @default("unknown") // Will map to Google User ID
+  fromEmail    String   @default("user@example.com")
+  subject      String
+  body         String
+  scheduledAt  DateTime
+  sentAt       DateTime?
+  status       String   @default("PENDING") // PENDING, SENT, FAILED
+  error        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([status, scheduledAt])
+}
