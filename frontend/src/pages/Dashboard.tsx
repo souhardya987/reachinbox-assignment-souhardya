@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import ScheduledEmails from '../components/ScheduledEmails';
 import SentEmails from '../components/SentEmails';

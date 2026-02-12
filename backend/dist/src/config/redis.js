@@ -6,10 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.redisConnection = void 0;
 const ioredis_1 = __importDefault(require("ioredis"));
 const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+const path_1 = __importDefault(require("path"));
+// Load .env explicitly
+dotenv_1.default.config({ path: path_1.default.resolve(__dirname, '../../.env') });
+console.log(`[Redis Config] Host: ${process.env.REDIS_HOST}, Port: ${process.env.REDIS_PORT}`);
 const redisConfig = {
-    host: process.env.REDIS_HOST || 'localhost',
+    host: process.env.REDIS_HOST || '127.0.0.1', // Force IPv4 default
     port: parseInt(process.env.REDIS_PORT || '6379'),
     maxRetriesPerRequest: null,
 };
 exports.redisConnection = new ioredis_1.default(redisConfig);
+exports.redisConnection.on('connect', () => console.log('[Redis] Connected to Redis'));
+exports.redisConnection.on('error', (err) => console.error('[Redis] Error:', err));

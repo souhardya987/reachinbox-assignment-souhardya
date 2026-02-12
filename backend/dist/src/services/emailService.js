@@ -39,10 +39,10 @@ const createTransporter = () => __awaiter(void 0, void 0, void 0, function* () {
     return transporter;
 });
 exports.createTransporter = createTransporter;
-const sendEmail = (to, subject, html) => __awaiter(void 0, void 0, void 0, function* () {
+const sendEmail = (to, subject, html, from) => __awaiter(void 0, void 0, void 0, function* () {
     const transporter = yield (0, exports.createTransporter)();
     const info = yield transporter.sendMail({
-        from: '"ReachInbox Scheduler" <scheduler@reachinbox.com>', // sender address
+        from: from || '"ReachInbox Scheduler" <scheduler@reachinbox.com>', // Use provided from or default
         to: to, // list of receivers
         subject: subject, // Subject line
         html: html, // html body
