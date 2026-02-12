@@ -3,7 +3,7 @@
 
 This project is a full-stack email scheduling application built with the PERN stack (PostgreSQL, Express, React, Node.js), TypeScript, and BullMQ for robust job scheduling.
 
-## 🚀 Features
+## Features
 
 ### Backend
 -   **Robust Scheduling**: Uses **BullMQ** (Redis-based) to schedule emails without relying on cron jobs.
@@ -27,7 +27,7 @@ This project is a full-stack email scheduling application built with the PERN st
 
 ---
 
-## 🛠️ Setup Instructions
+## Setup Instructions
 
 ### Prerequisites
 -   Node.js (v16+)
@@ -88,7 +88,7 @@ This project is a full-stack email scheduling application built with the PERN st
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 ### Scheduling & Persistence
 -   **Flow**: When a user schedules an email, it is saved to PostgreSQL with status `PENDING` and added to a BullMQ delay queue in Redis.
@@ -108,7 +108,7 @@ This project is a full-stack email scheduling application built with the PERN st
 
 ---
 
-## 🧪 Testing & Verification
+## Testing & Verification
 
 -   **Mock Email**: We use **Ethereal Email** to simulate sending. Credentials are auto-generated if not provided.
 -   **Verification Steps**:
@@ -117,7 +117,7 @@ This project is a full-stack email scheduling application built with the PERN st
     3.  **Restart**: Stop the backend `npm run dev` and start it again. Scheduled emails will still send.
     4.  **Delete**: Click the trash icon on a sent email in the frontend to verify deletion.
 
-## 📝 Assumptions & Trade-offs
+## Assumptions & Trade-offs
 -   **Global Rate Limit**: The current rate limit implementation is global for the worker instance. Per-user rate limiting would require dynamic queue names or key-based limiting in Redis.
 -   **Single Worker Instance**: The architecture supports horizontal scaling, but for this assignment, we assume a single worker instance.
 -   **Ethereal**: Used for demonstration; in production, this would be replaced by SendGrid/SES.
