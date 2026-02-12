@@ -24,13 +24,13 @@ services:
         generateValue: true
       - key: JWT_SECRET
         generateValue: true
-      # You need to add these manually in the dashboard
+      # You need to manually add these in the Render Dashboard -> Environment
       - key: GOOGLE_CLIENT_ID
         sync: false
       - key: GOOGLE_CLIENT_SECRET
         sync: false
-      - key: FRONTEND_URL # Using sync: false to prevent circular dependency issues during first deploy if URL not ready
-        sync: false 
+      - key: FRONTEND_URL
+        sync: false
 
 databases:
   - name: reachinbox-db
@@ -44,15 +44,3 @@ services:
     name: reachinbox-redis
     region: singapore
     plan: free
-
-staticSites:
-  - name: reachinbox-frontend
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    publishPath: dist
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: reachinbox-backend
-          property: url
