@@ -1,0 +1,46 @@
+services:
+  - type: web
+    name: reachinbox-backend
+    env: node
+    region: singapore
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: reachinbox-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: reachinbox-redis
+          property: connectionString
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+      # You need to add these manually in the dashboard
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+
+databases:
+  - name: reachinbox-db
+    databaseName: reachinbox
+    user: reachinbox_user
+    plan: free # or starter
+    region: singapore
+
+services:
+  - type: redis
+    name: reachinbox-redis
+    region: singapore
+    plan: free # or starter
+    ipAllowList: [] # Allow all internal connections
