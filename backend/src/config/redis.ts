@@ -8,7 +8,11 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 console.log(`[Redis Config] Host: ${process.env.REDIS_HOST}, Port: ${process.env.REDIS_PORT}`);
 
 const redisConfig = process.env.REDIS_URL
-    ? { connectionName: 'reachinbox-redis', family: 0 } // family: 0 let's ioredis auto-detect IP family, useful for Render
+    ? {
+        connectionName: 'reachinbox-redis',
+        family: 0,
+        maxRetriesPerRequest: null
+    }
     : {
         host: process.env.REDIS_HOST || '127.0.0.1',
         port: parseInt(process.env.REDIS_PORT || '6379'),
