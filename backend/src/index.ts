@@ -11,6 +11,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.set('trust proxy', 1); // Trust first proxy (Render)
+
 app.use(cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Vite Frontend URL
     credentials: true,
@@ -23,6 +25,9 @@ app.use(
         name: 'session',
         keys: [process.env.SESSION_SECRET || 'secret'],
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        secure: true, // Required for cross-site cookies (Render -> Vercel)
+        sameSite: 'none', // Required for cross-site cookies
+        httpOnly: true,
     })
 );
 
