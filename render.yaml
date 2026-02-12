@@ -3,33 +3,53 @@ services:
     name: reachinbox-backend
     env: node
     rootDir: backend
+    region: singapore
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
+      - key: NODE_ENV
+        value: production
       - key: PORT
         value: 10000
       - key: DATABASE_URL
-        sync: false
+        fromDatabase:
+          name: reachinbox-db
+          property: connectionString
       - key: REDIS_URL
-        sync: false
+        fromService:
+          type: redis
+          name: reachinbox-redis
+          property: connectionString
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+      # You need to add these manually in the dashboard
       - key: GOOGLE_CLIENT_ID
         sync: false
       - key: GOOGLE_CLIENT_SECRET
         sync: false
-      - key: SESSION_SECRET
-        generateValue: true
-      - key: FRONTEND_URL
-        fromService:
-          type: static
-          name: reachinbox-frontend
-          property: url
+      - key: FRONTEND_URL # Using sync: false to prevent circular dependency issues during first deploy if URL not ready
+        sync: false 
 
-  - type: static
-    name: reachinbox-frontend
-    env: static
+databases:
+  - name: reachinbox-db
+    databaseName: reachinbox
+    user: reachinbox_user
+    plan: free
+    region: singapore
+
+services:
+  - type: redis
+    name: reachinbox-redis
+    region: singapore
+    plan: free
+
+staticSites:
+  - name: reachinbox-frontend
     rootDir: frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
+    publishPath: dist
     envVars:
       - key: VITE_API_URL
         fromService:
