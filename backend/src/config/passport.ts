@@ -28,7 +28,7 @@ passport.use(
         {
             clientID: GOOGLE_CLIENT_ID || 'MISSING_CLIENT_ID',
             clientSecret: GOOGLE_CLIENT_SECRET || 'MISSING_CLIENT_SECRET',
-            callbackURL: 'http://localhost:3000/auth/google/callback',
+            callbackURL: `${process.env.BACKEND_URL || 'http://localhost:3000'}/auth/google/callback`,
         },
         (accessToken, refreshToken, profile, done) => {
             // Simplify user object for session (cookie size limits)

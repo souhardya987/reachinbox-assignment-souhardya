@@ -58,5 +58,5 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-    import('./worker'); // Start worker
+    import('./jobs/emailWorker'); // Start worker
 });
