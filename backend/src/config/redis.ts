@@ -24,4 +24,6 @@ export const redisConnection = process.env.REDIS_URL
     : new Redis(redisConfig);
 
 redisConnection.on('connect', () => console.log('[Redis] Connected to Redis'));
-redisConnection.on('error', (err) => console.error('[Redis] Error:', err));
+redisConnection.on('error', (err) => {
+    console.error('[Redis] Connection Error:', err);
+});

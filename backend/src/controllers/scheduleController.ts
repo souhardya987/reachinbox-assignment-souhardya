@@ -91,8 +91,9 @@ export const scheduleEmail = async (req: Request, res: Response) => {
         });
     } catch (error) {
         console.error('Error scheduling email:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Internal Server Error', details: error instanceof Error ? error.message : String(error) });
     }
+
 };
 
 export const getScheduledEmails = async (req: Request, res: Response) => {
@@ -111,8 +112,10 @@ export const getScheduledEmails = async (req: Request, res: Response) => {
         });
         res.json(emails);
     } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error fetching scheduled emails:', error);
+        res.status(500).json({ error: 'Internal Server Error', details: error instanceof Error ? error.message : String(error) });
     }
+
 };
 
 export const getSentEmails = async (req: Request, res: Response) => {
@@ -132,8 +135,10 @@ export const getSentEmails = async (req: Request, res: Response) => {
         });
         res.json(emails);
     } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error fetching sent emails:', error);
+        res.status(500).json({ error: 'Internal Server Error', details: error instanceof Error ? error.message : String(error) });
     }
+
 };
 
 export const getEmailCounts = async (req: Request, res: Response) => {
@@ -163,8 +168,9 @@ export const getEmailCounts = async (req: Request, res: Response) => {
         });
     } catch (error) {
         console.error('Error fetching email counts:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Internal Server Error', details: error instanceof Error ? error.message : String(error) });
     }
+
 };
 
 export const deleteEmail = async (req: Request, res: Response) => {
